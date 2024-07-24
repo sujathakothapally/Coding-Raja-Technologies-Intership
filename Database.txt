@@ -1,0 +1,34 @@
+-- Create users table
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL
+);
+
+-- Create accounts table
+CREATE TABLE accounts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    account_type TEXT NOT NULL,
+    balance REAL DEFAULT 0.0,
+    FOREIGN KEY(user_id) REFERENCES users(id)
+);
+
+-- Create transactions table
+CREATE TABLE transactions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    account_id INTEGER,
+    amount REAL,
+    transaction_type TEXT,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(account_id) REFERENCES accounts(id)
+);
+
+-- Create loans table
+CREATE TABLE loans (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    amount REAL,
+    remaining_balance REAL,
+    FOREIGN KEY(user_id) REFERENCES users(id)
+);
